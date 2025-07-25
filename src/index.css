@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Luxe Sneakers Design System - Dark Navy Theme */
+
+@layer base {
+  :root {
+    /* Primary navy blue theme */
+    --background: 231 59% 24%; /* Dark navy blue #0a0f3d */
+    --foreground: 0 0% 100%; /* Pure white */
+
+    --card: 231 59% 24%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 231 59% 30%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 0 0% 100%; /* White for primary buttons */
+    --primary-foreground: 231 59% 24%; /* Navy on white */
+
+    --secondary: 0 0% 0%; /* Black accents */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 231 45% 35%;
+    --muted-foreground: 0 0% 85%;
+
+    --accent: 220 30% 75%; /* Silver/grey highlights */
+    --accent-foreground: 231 59% 24%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 231 45% 35%;
+    --input: 231 45% 35%;
+    --ring: 0 0% 100%;
+
+    --radius: 0.75rem;
+
+    /* Custom design tokens */
+    --gradient-primary: linear-gradient(135deg, hsl(231, 59%, 24%), hsl(231, 59%, 30%));
+    --gradient-hero: linear-gradient(135deg, hsl(231, 59%, 20%), hsl(231, 59%, 24%));
+    --shadow-elegant: 0 10px 30px -10px hsl(0 0% 0% / 0.5);
+    --shadow-card: 0 4px 20px -4px hsl(0 0% 0% / 0.3);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 231 59% 24%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 0 0% 100%;
+    --sidebar-primary-foreground: 231 59% 24%;
+    --sidebar-accent: 231 45% 35%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 231 45% 35%;
+    --sidebar-ring: 0 0% 100%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    background: var(--gradient-primary);
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+  }
+}
+
+@layer components {
+  /* Hero button variant for main CTAs */
+  .btn-hero {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1;
+  }
+
+  /* Product card animations */
+  .product-card {
+    @apply transition-all duration-300 hover:scale-105 hover:shadow-xl;
+  }
+
+  /* Smooth hover animations */
+  .hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-2;
+  }
+
+  /* Glass effect for overlays */
+  .glass {
+    @apply backdrop-blur-md bg-white/10 border border-white/20;
+  }
+}
