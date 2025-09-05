@@ -1,10 +1,14 @@
-# supabase_client.py
-from supabase import create_client, Client
 import os
+from dotenv import load_dotenv
+from supabase import create_client, Client
+from pathlib import Path
 
-SUPABASE_URL = os.getenv("SUPABASE_URL")
-SUPABASE_SERVICE_KEY = os.getenv("SUPABASE_SERVICE_KEY")
+# Build an absolute path to the .env file and load it
+dotenv_path = Path(__file__).resolve().parent.parent.parent / '.env'
+load_dotenv(dotenv_path=dotenv_path)
 
+SUPABASE_URL = os.environ.get("SUPABASE_URL")
+SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_KEY")
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
 
 def insert_order(order_data):

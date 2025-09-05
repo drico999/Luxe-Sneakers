@@ -29,7 +29,38 @@ export default function Profile() {
         .eq('user_id', user.id)
         .single();
 
-      if (error) {
+      if (error && error.code === 'PGRST116') {
+        // Profile not found, create a new one
+        const newProfile = {
+          user_id: user.id,
+          full_name: user.user_metadata.full_name ?? '',
+          phone: user.user_metadata.phone ?? '',
+        };
+
+        const { error: insertError } = await supabase
+          .from('profiles')
+          .insert(newProfile);
+
+        if (insertError) {
+          toast({
+            title: 'Error creating profile',
+            description: insertError.message,
+            variant: 'destructive',
+          });
+        } else {
+          setFullName(newProfile.full_name);
+          setPhone(newProfile.phone);
+          // Other fields are empty initially
+          setDefaultAddress('');
+          setDefaultCity('');
+          setDefaultPostalCode('');
+          setDefaultProvince('');
+          toast({
+            title: 'Profile created',
+            description: "We've created a profile for you. You can add more details.",
+          });
+        }
+      } else if (error) {
         toast({
           title: 'Error loading profile',
           description: error.message,

@@ -24,7 +24,7 @@ export default function Contact() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!formData.name || !formData.email || !formData.message) {
@@ -35,19 +35,43 @@ export default function Contact() {
       return;
     }
 
-    console.log('Form submitted:', formData);
+    try {
+      const response = await fetch('http://localhost:5000/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    toast({
-      title: "Message sent successfully!",
-      description: "We'll get back to you within 24 hours.",
-    });
-
-    setFormData({
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    });
+      if (response.ok) {
+        toast({
+          title: "Message sent successfully!",
+          description: "We'll get back to you within 24 hours.",
+        });
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: ''
+        });
+      } else {
+        const errorData = await response.json();
+        console.error("Backend error:", errorData);
+        toast({
+          title: "Error sending message",
+          description: "The server responded with an error.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('Contact form submission error:', error);
+      toast({
+        title: "Error sending message",
+        description: "Could not connect to the server. Please try again later.",
+        variant: "destructive",
+      });
+    }
   };
 
   const contactInfo = [
